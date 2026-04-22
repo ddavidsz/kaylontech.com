@@ -20,6 +20,7 @@
     } catch (e) {
       document.documentElement.setAttribute('data-theme', 'dark');
     }
+    document.documentElement.classList.add('no-transition');
   })();
 </script>
 <meta charset="UTF-8" />
@@ -43,6 +44,17 @@
 <style>
   /* ─── Design tokens ─────────────────────────────────────────── */
 
+  @property --bg             { syntax: '<color>'; inherits: true; initial-value: #0b0b0c; }
+  @property --services-bg-mid { syntax: '<color>'; inherits: true; initial-value: #0a0a0b; }
+  @property --bg-elev   { syntax: '<color>'; inherits: true; initial-value: #111113; }
+  @property --ink       { syntax: '<color>'; inherits: true; initial-value: #ebe6d7; }
+  @property --ink-dim   { syntax: '<color>'; inherits: true; initial-value: #8a8373; }
+  @property --ink-muted { syntax: '<color>'; inherits: true; initial-value: #5a5648; }
+  @property --amber     { syntax: '<color>'; inherits: true; initial-value: #ff9443; }
+  @property --amber-dim { syntax: '<color>'; inherits: true; initial-value: #b86a2e; }
+  @property --line      { syntax: '<color>'; inherits: true; initial-value: #1e1d1a; }
+  @property --line-soft { syntax: '<color>'; inherits: true; initial-value: #17161340; }
+
   :root {
     --bg:        #0b0b0c;
     --bg-elev:   #111113;
@@ -56,6 +68,12 @@
     --serif: 'Fraunces', 'Times New Roman', serif;
     --mono:  'JetBrains Mono', 'Courier New', monospace;
     --sans:  'Manrope', system-ui, sans-serif;
+    transition:
+      --bg 0.5s ease, --bg-elev 0.5s ease,
+      --ink 0.5s ease, --ink-dim 0.5s ease, --ink-muted 0.5s ease,
+      --amber 0.5s ease, --amber-dim 0.5s ease,
+      --line 0.5s ease, --line-soft 0.5s ease,
+      --services-bg-mid 0.5s ease;
   }
 
   /* ─── Reset ─────────────────────────────────────────────────── */
@@ -92,6 +110,7 @@
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     opacity: 0.5;
     mix-blend-mode: overlay;
+    transition: opacity 0.5s ease;
   }
 
   /* Scanline effect */
@@ -108,6 +127,7 @@
       rgba(255, 148, 67, 0.012) 2px,
       rgba(255, 148, 67, 0.012) 4px
     );
+    transition: opacity 0.5s ease;
   }
 
   ::selection {
@@ -138,6 +158,7 @@
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
     border-bottom: 1px solid var(--line);
+    transition: background 0.5s ease;
   }
 
   .nav-inner {
@@ -466,7 +487,7 @@
   /* ─── Services ──────────────────────────────────────────────── */
 
   .services {
-    background: linear-gradient(180deg, transparent 0%, #0a0a0b 50%, transparent 100%);
+    background: linear-gradient(180deg, transparent 0%, var(--services-bg-mid) 50%, transparent 100%);
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
   }
@@ -849,15 +870,16 @@
   /* ─── Light mode ────────────────────────────────────────────── */
 
   [data-theme="light"] {
-    --bg:        #f4efe4;
-    --bg-elev:   #ede8dc;
-    --ink:       #1c1a15;
-    --ink-dim:   #5c5648;
-    --ink-muted: #9a9080;
-    --amber:     #c45c10;
-    --amber-dim: #a34d0e;
-    --line:      #d8d2c4;
-    --line-soft: #d8d2c440;
+    --bg:             #f4efe4;
+    --bg-elev:        #ede8dc;
+    --ink:            #1c1a15;
+    --ink-dim:        #5c5648;
+    --ink-muted:      #9a9080;
+    --amber:          #c45c10;
+    --amber-dim:      #a34d0e;
+    --line:           #d8d2c4;
+    --line-soft:      #d8d2c440;
+    --services-bg-mid: #e8e2d6;
   }
 
   /* Noise overlay is subtieler op lichte achtergrond */
@@ -868,17 +890,12 @@
 
   /* Scanlines zijn nauwelijks zichtbaar op licht — uitzetten */
   [data-theme="light"] body::after {
-    display: none;
+    opacity: 0;
   }
 
   /* Nav: lichte frosted-glass variant */
   [data-theme="light"] nav {
     background: rgba(244, 239, 228, 0.85);
-  }
-
-  /* Services-sectie: hardcoded gradient overschrijven */
-  [data-theme="light"] .services {
-    background: linear-gradient(180deg, transparent 0%, #e8e2d6 50%, transparent 100%);
   }
 
   /* Terminal: lichte variant */
@@ -893,6 +910,18 @@
 
   [data-theme="light"] .terminal-dot {
     background: #c4bdb0;
+  }
+
+  .terminal          { transition: background 0.5s ease, box-shadow 0.5s ease; }
+  .terminal-header   { transition: background 0.5s ease; }
+  .terminal-dot      { transition: background 0.5s ease; }
+
+  /* Suppress transitions on initial page load */
+  .no-transition,
+  .no-transition *,
+  .no-transition *::before,
+  .no-transition *::after {
+    transition: none !important;
   }
 
   /* Theme toggle knop */
@@ -1490,6 +1519,13 @@
 
     // Sync knoplabel met huidige staat
     setTheme(getTheme());
+
+    // Enable transitions after first paint (prevent flash on load)
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        document.documentElement.classList.remove('no-transition');
+      });
+    });
 
     btn.addEventListener('click', function() {
       setTheme(getTheme() === 'dark' ? 'light' : 'dark');
