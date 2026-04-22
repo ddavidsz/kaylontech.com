@@ -17,11 +17,21 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="theme-color" content="#0b0b0c" />
+<meta name="description" content="Kaylon Tech is een onafhankelijk consultancy-agency voor infrastructuur, security en software engineering. Doordachte systemen, helder gedocumenteerd." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://kaylontech.com/" />
+<meta property="og:title" content="Kaylon Tech — Systems Consultancy" />
+<meta property="og:description" content="Kaylon Tech is een onafhankelijk consultancy-agency voor infrastructuur, security en software engineering. Doordachte systemen, helder gedocumenteerd." />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Kaylon Tech — Systems Consultancy" />
+<meta name="twitter:description" content="Kaylon Tech is een onafhankelijk consultancy-agency voor infrastructuur, security en software engineering. Doordachte systemen, helder gedocumenteerd." />
+<link rel="canonical" href="https://kaylontech.com/" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <title>Kaylon Tech — Systems Consultancy</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
 <style>
   :root {
     --bg: #0b0b0c;
@@ -215,6 +225,14 @@
 
   ::selection { background: var(--amber); color: var(--bg); }
 
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+    .stack-marquee { animation: none; }
+    .cursor { animation: none; }
+    .has-js .reveal { opacity: 1; transform: none; transition: none; }
+    .fade-up { animation: none; opacity: 1; transform: none; }
+  }
+
 </style>
 </head>
 <body>
@@ -240,6 +258,7 @@
   </div>
 </nav>
 
+<main>
 <header class="hero">
   <div class="container">
     <div class="hero-grid">
@@ -260,7 +279,7 @@
         </div>
       </div>
 
-      <div class="terminal fade-up delay-4">
+      <div class="terminal fade-up delay-4" aria-hidden="true">
         <div class="terminal-header">
           <span class="terminal-dot active"></span>
           <span class="terminal-dot"></span>
@@ -397,7 +416,7 @@
         <div class="spec-row"><span class="spec-key" data-i18n="about.spec.langs">Talen</span><span class="spec-val">NL / EN</span></div>
         <div class="spec-row"><span class="spec-key">MBTI</span><span class="spec-val">INTP</span></div>
         <div class="spec-row"><span class="spec-key" data-i18n="about.spec.focus">Focus</span><span class="spec-val highlight" data-i18n="about.spec.focus.val">Systems &amp; Security</span></div>
-        <div class="spec-row"><span class="spec-key" data-i18n="about.spec.avail">Beschikbaar</span><span class="spec-val highlight">Q2 2026 →</span></div>
+        <div class="spec-row"><span class="spec-key" data-i18n="about.spec.avail">Beschikbaar</span><span class="spec-val highlight" data-i18n="about.spec.avail.val">Q2 2026 →</span></div>
       </div>
 
       <div class="about-body reveal">
@@ -425,6 +444,8 @@
     </div>
   </div>
 </section>
+
+</main>
 
 <footer>
   <div class="container footer-inner">
@@ -488,6 +509,7 @@
         'about.spec.focus': 'Focus',
         'about.spec.focus.val': 'Systems & Security',
         'about.spec.avail': 'Beschikbaar',
+        'about.spec.avail.val': 'Q2 2026 →',
         'about.body.p1': 'Daan Davidsz is de founder van Kaylon Tech. Na jaren als Lead Developer in multidisciplinaire engineering-teams ontstond Kaylon uit één observatie: de meeste technische problemen zijn geen technische problemen — ze zijn beslissingen die te vroeg zijn genomen met te weinig context.',
         'about.body.p2': 'Het werk richt zich op organisaties die voorbij de "launch &amp; iterate"-fase zijn en nu serieus moeten nadenken over dataprotectie, reproduceerbare infrastructuur en de lange-termijn houdbaarheid van hun engineering-cultuur.',
         'about.body.p3': 'Geen salesfunnel. Geen pakketten. Alleen een intake-gesprek, een helder voorstel, en werk dat staat als een huis.',
@@ -502,7 +524,7 @@
         'nav.approach': 'Approach',
         'nav.about': 'About',
         'nav.contact': 'Contact →',
-        'hero.meta': 'CONSULTANCY · SNEEK · EST. 2026',
+        'hero.meta': 'CONSULTANCY · SNEEK · EST. 2018',
         'hero.title': 'Systems that <em>endure</em>.<br>Architecture with intent.',
         'hero.sub': 'Kaylon Tech is an independent consultancy for organizations that take their infrastructure, security and engineering practice seriously. No quick hacks — deliberate systems, clearly documented.',
         'hero.cta1': 'Schedule a call →',
@@ -546,6 +568,7 @@
         'about.spec.focus': 'Focus',
         'about.spec.focus.val': 'Systems & Security',
         'about.spec.avail': 'Available',
+        'about.spec.avail.val': 'Q2 2026 →',
         'about.body.p1': 'Daan Davidsz is the founder of Kaylon Tech. After years as a Lead Developer in multidisciplinary engineering teams, Kaylon grew out of a single observation: most technical problems aren\u2019t technical problems — they\u2019re decisions that were made too early with too little context.',
         'about.body.p2': 'The work focuses on organizations that are past the "launch &amp; iterate" phase and now need to think seriously about data protection, reproducible infrastructure, and the long-term sustainability of their engineering culture.',
         'about.body.p3': 'No sales funnel. No packages. Just an intake conversation, a clear proposal, and work that stands up over time.',
