@@ -12,6 +12,14 @@
     } catch (e) {
       document.documentElement.setAttribute('data-lang', 'nl');
     }
+    try {
+      var storedTheme = localStorage.getItem('kaylon-theme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var theme = storedTheme || (prefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    } catch (e) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
   })();
 </script>
 <meta charset="UTF-8" />
@@ -838,6 +846,77 @@
     .logo      { font-size: 0.78rem; }
   }
 
+  /* ─── Light mode ────────────────────────────────────────────── */
+
+  [data-theme="light"] {
+    --bg:        #f4efe4;
+    --bg-elev:   #ede8dc;
+    --ink:       #1c1a15;
+    --ink-dim:   #5c5648;
+    --ink-muted: #9a9080;
+    --amber:     #c45c10;
+    --amber-dim: #a34d0e;
+    --line:      #d8d2c4;
+    --line-soft: #d8d2c440;
+  }
+
+  /* Noise overlay is subtieler op lichte achtergrond */
+  [data-theme="light"] body::before {
+    opacity: 0.25;
+    mix-blend-mode: multiply;
+  }
+
+  /* Scanlines zijn nauwelijks zichtbaar op licht — uitzetten */
+  [data-theme="light"] body::after {
+    display: none;
+  }
+
+  /* Nav: lichte frosted-glass variant */
+  [data-theme="light"] nav {
+    background: rgba(244, 239, 228, 0.85);
+  }
+
+  /* Services-sectie: hardcoded gradient overschrijven */
+  [data-theme="light"] .services {
+    background: linear-gradient(180deg, transparent 0%, #e8e2d6 50%, transparent 100%);
+  }
+
+  /* Terminal: lichte variant */
+  [data-theme="light"] .terminal {
+    background: rgba(237, 232, 220, 0.7);
+    box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.15), 0 0 0 1px #00000008 inset;
+  }
+
+  [data-theme="light"] .terminal-header {
+    background: #e5dfd3;
+  }
+
+  [data-theme="light"] .terminal-dot {
+    background: #c4bdb0;
+  }
+
+  /* Theme toggle knop */
+  .theme-toggle {
+    background: none;
+    border: 1px solid var(--line);
+    color: var(--ink-muted);
+    font-size: 1rem;
+    width: 2.1rem;
+    height: 2.1rem;
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
+  }
+
+  .theme-toggle:hover {
+    color: var(--ink);
+    border-color: var(--ink-dim);
+  }
+
   /* ─── Reduced motion ────────────────────────────────────────── */
 
   @media (prefers-reduced-motion: reduce) {
@@ -867,6 +946,9 @@
       <li class="hide-mobile"><a href="#aanpak" data-i18n="nav.approach">Aanpak</a></li>
       <li><a href="#over" data-i18n="nav.about">Over</a></li>
       <li><a href="#contact" class="nav-cta" data-i18n="nav.contact">Contact →</a></li>
+      <li>
+        <button class="theme-toggle" type="button" id="theme-toggle" aria-label="Toggle light/dark mode">◑</button>
+      </li>
       <li>
         <div class="lang-switch" role="group" aria-label="Language">
           <button type="button" data-lang-btn="nl" aria-pressed="true">NL</button>
@@ -1388,6 +1470,41 @@
 
     // Safety net: laat na 2,5s alle nog-verborgen elementen alsnog zien
     setTimeout(showAll, 2500);
+  })();
+</script>
+
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+
+    function getTheme() {
+      return document.documentElement.getAttribute('data-theme') || 'dark';
+    }
+
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+      try { localStorage.setItem('kaylon-theme', theme); } catch (e) {}
+    }
+
+    // Sync knoplabel met huidige staat
+    setTheme(getTheme());
+
+    btn.addEventListener('click', function() {
+      setTheme(getTheme() === 'dark' ? 'light' : 'dark');
+    });
+
+    // Volg systeemwijziging als gebruiker geen voorkeur heeft opgeslagen
+    if (window.matchMedia) {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+        try {
+          if (!localStorage.getItem('kaylon-theme')) {
+            setTheme(e.matches ? 'dark' : 'light');
+          }
+        } catch (err) {}
+      });
+    }
   })();
 </script>
 
