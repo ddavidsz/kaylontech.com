@@ -688,7 +688,8 @@
       const dict = translations[lang];
       document.documentElement.lang = lang;
       document.documentElement.setAttribute('data-lang', lang);
-      if (titles[lang]) document.title = titles[lang];
+      const devPrefix = (location.hostname === 'localhost' || location.hostname === '127.0.0.1') ? '[dev] ' : '';
+    if (titles[lang]) document.title = devPrefix + titles[lang];
 
       // Annuleer lopende animaties van een vorige wissel
       if (applyLang._cancels) applyLang._cancels.forEach(fn => fn());
